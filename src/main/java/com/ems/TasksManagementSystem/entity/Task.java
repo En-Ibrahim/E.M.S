@@ -1,9 +1,6 @@
 package com.ems.TasksManagementSystem.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -19,10 +16,13 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long task_id;
 
-    private Project project;
     private String name;
     private String description;
     private State state;
 
+    @ManyToOne
+    private Project project;
+    @ManyToOne
+    private Employee belongTo;
 
 }
