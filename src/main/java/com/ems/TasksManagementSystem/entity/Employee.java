@@ -18,7 +18,8 @@ public class Employee {
     private Long emp_id;
 
     private String name;
-    private Email email;
+    @Email
+    private String email;
     private String position;
 
     @ManyToOne

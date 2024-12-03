@@ -35,6 +35,7 @@ public class EmployeeServices {
     public Employee findById(Long id){
         return employeeRepo.findById(id).orElseThrow();
     }
+    public List<Employee> findAll(){return employeeRepo.findAll();}
 
     public Optional<List<Employee>> findAllEmployeeByDepartment(String department){
 
