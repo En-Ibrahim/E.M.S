@@ -1,17 +1,16 @@
 package com.ems.TasksManagementSystem.controller;
 
 
-import com.ems.TasksManagementSystem.entity.Department;
+
 import com.ems.TasksManagementSystem.entity.Task;
 import com.ems.TasksManagementSystem.services.TaskServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/task")
 @RequiredArgsConstructor
 public class TaskControll {
