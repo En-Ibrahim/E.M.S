@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface EmployeeRepo extends JpaRepository<Employee,Long> {
+public interface EmployeeRepo extends JpaRepository<Employee, Long> {
 
-    @Query(value = "select e from Employee e where e.department=?1",nativeQuery = false)
-    Optional<List<Employee>> findAllByDepartment(String department);
+    @Query(value = "select e from Employee e where e.department=?1", nativeQuery = false)
+    List<Employee> findAllByDepartment(String department);
 
 
 }

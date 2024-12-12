@@ -1,7 +1,6 @@
 package com.ems.TasksManagementSystem.controller;
 
 
-
 import com.ems.TasksManagementSystem.entity.Task;
 import com.ems.TasksManagementSystem.services.TaskServices;
 import lombok.RequiredArgsConstructor;
@@ -18,25 +17,28 @@ public class TaskControll {
     private TaskServices services;
 
     @PostMapping
-    public ResponseEntity<?> addTask(@RequestBody Task task){
+    public ResponseEntity<?> addTask(@RequestBody Task task) {
         return ResponseEntity.ok(services.addTask(task));
     }
+
     @PutMapping
-    public ResponseEntity<?> updateTask(@RequestBody Task task){
+    public ResponseEntity<?> updateTask(@RequestBody Task task) {
         return ResponseEntity.ok(services.updateTask(task));
     }
+
     @GetMapping("/id")
-    public ResponseEntity<?> findByID(@Param("id") Long id){
+    public ResponseEntity<?> findByID(@Param("id") Long id) {
         return ResponseEntity.ok(services.findByID(id));
     }
+
     @GetMapping
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(services.findAll());
     }
 
 
     @DeleteMapping
-    public ResponseEntity<?> delete(Long id){
+    public ResponseEntity<?> delete(Long id) {
         services.delete(id);
         return ResponseEntity.ok(null);
     }

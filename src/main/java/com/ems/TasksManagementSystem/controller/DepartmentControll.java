@@ -17,25 +17,28 @@ public class DepartmentControll {
     private DepartmentServices services;
 
     @PostMapping
-    public ResponseEntity<?> addDepartment(@RequestBody Department department){
+    public ResponseEntity<?> addDepartment(@RequestBody Department department) {
         return ResponseEntity.ok(services.addDepartment(department));
     }
+
     @PutMapping
-    public ResponseEntity<?> updateDepartment(Department department){
+    public ResponseEntity<?> updateDepartment(Department department) {
         return ResponseEntity.ok(services.updateDepartment(department));
     }
+
     @GetMapping("/id")
-    public ResponseEntity<?> findByID(@Param("id") Long id){
+    public ResponseEntity<?> findByID(@Param("id") Long id) {
         return ResponseEntity.ok(services.findById(id));
     }
+
     @GetMapping
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(services.findAll());
     }
 
 
     @DeleteMapping
-    public ResponseEntity<?> delete(Long id){
+    public ResponseEntity<?> delete(Long id) {
         services.delete(id);
         return ResponseEntity.ok(null);
     }
