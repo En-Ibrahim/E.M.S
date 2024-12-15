@@ -20,6 +20,7 @@ public class Employee {
     private String name;
     @Email
     private String email;
+    private String password;
     private String position;
 
     @ManyToOne
