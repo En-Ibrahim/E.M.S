@@ -2,6 +2,8 @@ package com.ems.TasksManagementSystem.services;
 
 import com.ems.TasksManagementSystem.dto.DepartmentDto;
 import com.ems.TasksManagementSystem.entity.Department;
+import com.ems.TasksManagementSystem.exception.BadRequestException;
+import com.ems.TasksManagementSystem.exception.RecordNotFoundException;
 import com.ems.TasksManagementSystem.mapper.DepartmentMapper;
 import com.ems.TasksManagementSystem.repo.DepartmentRepo;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +27,10 @@ public class DepartmentServices {
 
 
     public DepartmentDto addDepartment(Department department) {
-
-        return mapper.mapToDTO(departmentRepo.save(department));
+        if(department!=null && department.getName()!=null )
+            return mapper.mapToDTO(departmentRepo.save(department));
+        else
+             throw new BadRequestException("Entry correct data");
     }
 
     public DepartmentDto updateDepartment(Department entity) {
@@ -34,16 +38,24 @@ public class DepartmentServices {
         if (!employee.isEmpty() && employee.isPresent())
             return mapper.mapToDTO(departmentRepo.save(employee.get()));
         else
-            throw new IllegalStateException("Not found employee");
+            throw new RecordNotFoundException("Not found Department , Please check it again");
     }
 
     public DepartmentDto findById(Long id) {
-        return mapper.mapToDTO(departmentRepo.findById(id).orElseThrow());
+        Optional<Department> optional= departmentRepo.findById(id);
+        if (optional.isEmpty()&& optional!=null)
+            return mapper.mapToDTO(optional.get());
+        else
+            throw new RecordNotFoundException("Npt found Department");
     }
 
 
     public List<DepartmentDto> findAll() {
-        return mapper.mapToDTO(departmentRepo.findAll());
+        List<Department> optionals = departmentRepo.findAll();
+        if (optionals!=null)
+            return mapper.mapToDTO(departmentRepo.findAll());
+        else
+            throw new RecordNotFoundException("Not Found Departments ");
     }
 
     public void delete(Long id) {
@@ -51,7 +63,7 @@ public class DepartmentServices {
         if (!department.isEmpty() && department.isPresent())
             departmentRepo.delete(department.get());
         else
-            throw new IllegalStateException("Not found employee");
+            throw new RecordNotFoundException("Not found employee");
     }
 
 }

@@ -5,6 +5,7 @@ import com.ems.TasksManagementSystem.dto.EmployeeDto;
 import com.ems.TasksManagementSystem.entity.Department;
 import com.ems.TasksManagementSystem.entity.Employee;
 
+import com.ems.TasksManagementSystem.exception.RecordNotFoundException;
 import com.ems.TasksManagementSystem.mapper.EmplyeeMapper;
 import com.ems.TasksManagementSystem.repo.DepartmentRepo;
 import com.ems.TasksManagementSystem.repo.EmployeeRepo;
@@ -28,39 +29,47 @@ public class EmployeeServices {
     private final EmplyeeMapper mapper;
 
     public EmployeeDto addEmployee(Employee employee) {
-        EmployeeDto dto=  mapper.mapToDTO(employeeRepo.save(employee));
-        return dto;
+        if(employee!=null )
+            return mapper.mapToDTO(employeeRepo.save(employee));
+        else
+            throw new RecordNotFoundException("Entry Correct data");
     }
 
     public EmployeeDto updateEmployee(Employee entity) {
 
         Optional<Employee> employee = employeeRepo.findById(entity.getEmp_id());
         if (!employee.isEmpty() && employee.isPresent()) {
-            EmployeeDto dto = mapper.mapToDTO(employeeRepo.save(employee.get()));
-            return dto;
+            return mapper.mapToDTO(employeeRepo.save(employee.get()));
         }
         else
-            throw new IllegalStateException("Not found employee");
+            throw new RecordNotFoundException("Not found Employee");
     }
 
     public EmployeeDto findById(Long id) {
-        EmployeeDto dto = mapper.mapToDTO(employeeRepo.findById(id).orElseThrow());
-        return dto;
+        Optional<Employee> optional = employeeRepo.findById(id);
+        if (optional.isPresent()&& !optional.isEmpty())
+            return mapper.mapToDTO(optional.get());
+        else
+            throw new RecordNotFoundException("Not found Employee");
     }
 
     public List<EmployeeDto> findAll() {
-
-        return mapper.mapToDTO(employeeRepo.findAll());
+        if(employeeRepo.findAll()!=null)
+            return mapper.mapToDTO(employeeRepo.findAll());
+        else
+            throw new RecordNotFoundException("Not found Employees");
     }
 
     public List<EmployeeDto> findAllEmployeeByDepartment(String department) {
 
         Optional<Department> department1 = departmentRepo.findByName(department);
         if (!department1.isEmpty() && department1.isPresent() && department!=null)
-
-            return mapper.mapToDTO(employeeRepo.findAllByDepartment(department));
+            if (employeeRepo.findAllByDepartment(department)!=null)
+                return mapper.mapToDTO(employeeRepo.findAllByDepartment(department));
+            else
+                throw new RecordNotFoundException("Not Found Employees in this department");
         else
-            throw new IllegalStateException("not found Department");
+            throw new RecordNotFoundException("not found Department");
     }
 
     public void delete(Long id) {
