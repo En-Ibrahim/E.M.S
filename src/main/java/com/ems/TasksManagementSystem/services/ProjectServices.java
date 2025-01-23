@@ -3,6 +3,8 @@ package com.ems.TasksManagementSystem.services;
 
 import com.ems.TasksManagementSystem.dto.ProjectDto;
 import com.ems.TasksManagementSystem.entity.Project;
+import com.ems.TasksManagementSystem.exception.BadRequestException;
+import com.ems.TasksManagementSystem.exception.RecordNotFoundException;
 import com.ems.TasksManagementSystem.mapper.ProjectMapper;
 import com.ems.TasksManagementSystem.repo.ProjectRepo;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,10 @@ public class ProjectServices {
     private final ProjectMapper mapper;
 
     public ProjectDto addProject(Project project) {
-        return mapper.mapToDTO(projectRepo.save(project));
+        if(project!=null && project.getName()!=null)
+            return mapper.mapToDTO(projectRepo.save(project));
+        else
+            throw new BadRequestException("Entry correct data");
     }
 
     public ProjectDto updateProject(Project entity) {
@@ -32,16 +37,23 @@ public class ProjectServices {
         if (!project.isEmpty() && project.isPresent())
             return mapper.mapToDTO(projectRepo.save(project.get()));
         else
-            throw new IllegalStateException("Not found employee");
+            throw new RecordNotFoundException("Not found employee");
     }
 
     public ProjectDto findById(Long id) {
-        return mapper.mapToDTO(projectRepo.findById(id).orElseThrow());
+        Optional<Project> optional = projectRepo.findById(id);
+        if(!optional.isEmpty() && optional.isPresent())
+            return mapper.mapToDTO(optional.get());
+        else
+            throw new RecordNotFoundException("Not found project");
     }
 
 
     public List<ProjectDto> findAll() {
-        return mapper.mapToDTO(projectRepo.findAll());
+        if(projectRepo.findAll()!=null)
+           return mapper.mapToDTO(projectRepo.findAll());
+        else
+            throw new RecordNotFoundException("Not found projects");
     }
 
     public void delete(Long id) {
@@ -49,7 +61,7 @@ public class ProjectServices {
         if (!project.isEmpty() && project.isPresent())
             projectRepo.delete(project.get());
         else
-            throw new IllegalStateException("Not found employee");
+            throw new RecordNotFoundException("Not found employee");
     }
 
 }

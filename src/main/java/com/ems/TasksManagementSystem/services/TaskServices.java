@@ -2,6 +2,8 @@ package com.ems.TasksManagementSystem.services;
 
 import com.ems.TasksManagementSystem.dto.TaskDto;
 import com.ems.TasksManagementSystem.entity.Task;
+import com.ems.TasksManagementSystem.exception.BadRequestException;
+import com.ems.TasksManagementSystem.exception.RecordNotFoundException;
 import com.ems.TasksManagementSystem.mapper.TaskMapper;
 import com.ems.TasksManagementSystem.repo.TaskRepo;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,10 @@ public class TaskServices {
     private final TaskMapper mapper;
 
     public TaskDto addTask(Task task) {
-        return mapper.mapToDTO(taskRepo.save(task));
+        if (task!=null && task.getName()!=null)
+            return mapper.mapToDTO(taskRepo.save(task));
+        else
+            throw new BadRequestException("Entry correct data");
     }
 
 
@@ -31,15 +36,21 @@ public class TaskServices {
         if (!entity.isEmpty() && entity.isPresent())
             return mapper.mapToDTO(taskRepo.save(entity.get()));
         else
-            throw new IllegalStateException("Not found task");
+            throw new RecordNotFoundException("Not found task");
     }
 
     public TaskDto findByID(Long id) {
-        return mapper.mapToDTO(taskRepo.findById(id).orElseThrow());
+        if (taskRepo.findById(id).isPresent() && !taskRepo.findById(id).isEmpty())
+            return mapper.mapToDTO(taskRepo.findById(id).orElseThrow());
+        else
+            throw new RecordNotFoundException("Not found the task");
     }
 
     public List<TaskDto> findAll() {
-        return mapper.mapToDTO(taskRepo.findAll());
+        if(taskRepo.findAll()!=null)
+            return mapper.mapToDTO(taskRepo.findAll());
+        else
+            throw new RecordNotFoundException("Not found tasks");
     }
 
     public void delete(Long id) {
@@ -48,7 +59,7 @@ public class TaskServices {
         if (!entity.isEmpty() && entity.isPresent())
             taskRepo.deleteById(id);
         else
-            throw new IllegalStateException("Not found task");
+            throw new RecordNotFoundException("Not found task");
 
     }
 

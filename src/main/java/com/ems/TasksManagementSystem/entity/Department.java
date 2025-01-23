@@ -1,5 +1,6 @@
 package com.ems.TasksManagementSystem.entity;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,6 +17,7 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long dept_id;
 
+    @Nonnull
     private String name;
 
     @OneToOne

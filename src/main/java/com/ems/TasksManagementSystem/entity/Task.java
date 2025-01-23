@@ -1,6 +1,7 @@
 package com.ems.TasksManagementSystem.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -16,6 +17,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long task_id;
 
+    @NotNull
     private String name;
     private String description;
     private State state;

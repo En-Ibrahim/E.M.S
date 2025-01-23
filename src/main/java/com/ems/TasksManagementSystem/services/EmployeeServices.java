@@ -5,6 +5,7 @@ import com.ems.TasksManagementSystem.dto.EmployeeDto;
 import com.ems.TasksManagementSystem.entity.Department;
 import com.ems.TasksManagementSystem.entity.Employee;
 
+import com.ems.TasksManagementSystem.exception.BadRequestException;
 import com.ems.TasksManagementSystem.exception.RecordNotFoundException;
 import com.ems.TasksManagementSystem.mapper.EmplyeeMapper;
 import com.ems.TasksManagementSystem.repo.DepartmentRepo;
@@ -32,7 +33,7 @@ public class EmployeeServices {
         if(employee!=null )
             return mapper.mapToDTO(employeeRepo.save(employee));
         else
-            throw new RecordNotFoundException("Entry Correct data");
+            throw new BadRequestException("Entry Correct data");
     }
 
     public EmployeeDto updateEmployee(Employee entity) {
