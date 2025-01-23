@@ -12,7 +12,7 @@ public interface DepartmentMapper {
 
 
 
-    @Mapping(target = "employee",ignore = true)
+//    @Mapping(target = "employee",ignore = true)
     @Mapping(target = "manager",source = "manager.name")
     DepartmentDto mapToDTO(Department department);
 

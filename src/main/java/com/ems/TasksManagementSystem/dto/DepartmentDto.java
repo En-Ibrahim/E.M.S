@@ -5,7 +5,7 @@ import com.ems.TasksManagementSystem.entity.Employee;
 import lombok.*;
 
 @Data
-@Builder
+//@Builder
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
