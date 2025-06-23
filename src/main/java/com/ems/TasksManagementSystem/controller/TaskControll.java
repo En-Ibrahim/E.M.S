@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/api/v1/task")
 @RequiredArgsConstructor
 public class TaskControll {
     @Autowired

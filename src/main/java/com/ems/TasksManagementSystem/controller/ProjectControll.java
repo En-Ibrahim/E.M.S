@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/api/v1/project")
 @RequiredArgsConstructor
 public class ProjectControll {
     @Autowired
