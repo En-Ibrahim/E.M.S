@@ -7,15 +7,18 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(uses = EmplyeeMapper.class)
+@Mapper(uses = EmployeeMapper.class)
 public interface DepartmentMapper {
 
 
 
 //    @Mapping(target = "employee",ignore = true)
-    @Mapping(target = "manager",source = "manager.name")
+    @Mapping(target = "manager",source = "manager.fullName")
     DepartmentDto mapToDTO(Department department);
+    @Mapping(target = "manager.fullName",source = "manager")
+    Department mapToEntity(DepartmentDto dto);
 
 
     List<DepartmentDto> mapToDTO(List<Department> departments);
+    List<Department> mapToEntity(List<DepartmentDto> dtos);
 }

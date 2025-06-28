@@ -29,7 +29,8 @@ public class DepartmentServices {
 
     private final Logger logger = LoggerFactory.getLogger(DepartmentServices.class);
 
-    public DepartmentDto addDepartment(Department department) {
+    public DepartmentDto addDepartment(DepartmentDto dto) {
+        Department department=  mapper.mapToEntity(dto);
 
         if (department != null && department.getName() != null) {
             if (departmentRepo.findByName(department.getName()).isEmpty() && !departmentRepo.findByName(department.getName()).isPresent())
