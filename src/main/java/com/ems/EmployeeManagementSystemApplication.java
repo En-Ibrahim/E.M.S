@@ -1,5 +1,7 @@
 package com.ems;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,4 +12,6 @@ public class EmployeeManagementSystemApplication {
         SpringApplication.run(EmployeeManagementSystemApplication.class, args);
     }
 
+
+    // http://localhost:8080/swagger-ui/index.html
 }
