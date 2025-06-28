@@ -21,6 +21,6 @@ public class TaskDto {
 
     private String project;
 
-    private String belongTo;
+    private String assign_to;
 
 }
