@@ -2,12 +2,14 @@ package com.ems.TasksManagementSystem.services;
 
 
 import com.ems.TasksManagementSystem.dto.EmployeeDto;
+import com.ems.TasksManagementSystem.dto.EmployeeDtoRequest;
 import com.ems.TasksManagementSystem.entity.Department;
 import com.ems.TasksManagementSystem.entity.Employee;
 import com.ems.TasksManagementSystem.exception.BadRequestException;
 import com.ems.TasksManagementSystem.exception.DuplicatedErrorException;
 import com.ems.TasksManagementSystem.exception.RecordNotFoundException;
-import com.ems.TasksManagementSystem.mapper.EmplyeeMapper;
+import com.ems.TasksManagementSystem.mapper.EmployeeMapper;
+import com.ems.TasksManagementSystem.mapper.EmployeeRequestMapper;
 import com.ems.TasksManagementSystem.repo.DepartmentRepo;
 import com.ems.TasksManagementSystem.repo.EmployeeRepo;
 import lombok.RequiredArgsConstructor;
@@ -29,15 +31,22 @@ public class EmployeeServices {
     @Autowired
     private DepartmentRepo departmentRepo;
     @Autowired
-    private final EmplyeeMapper mapper;
+    private final EmployeeMapper mapper;
+
+    @Autowired
+    private final EmployeeRequestMapper requestMapper;
+
 
     private final Logger logger = LoggerFactory.getLogger(EmployeeServices.class);
 
 
-    public EmployeeDto addEmployee(Employee employee) {
-        if (employee != null && employee.getName() != null && employee.getEmail() != null) {
+    public EmployeeDtoRequest addEmployee(EmployeeDtoRequest employeeDto) {
+
+        Employee employee=requestMapper.mapToEntity(employeeDto);
+
+        if (employee != null && employee.getFullName() != null && employee.getEmail() != null) {
             if (employeeRepo.findByEmail(employee.getEmail()).isEmpty() && !employeeRepo.findByEmail(employee.getEmail()).isPresent()) {
-                return mapper.mapToDTO(employeeRepo.save(employee));
+                return requestMapper.mapToDTO(employeeRepo.save(employee));
             } else {
                 logger.error("The Employee is duplicate");
                 throw new DuplicatedErrorException("The Employee is duplicate");

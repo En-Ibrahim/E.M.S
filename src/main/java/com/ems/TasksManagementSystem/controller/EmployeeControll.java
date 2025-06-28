@@ -1,7 +1,10 @@
 package com.ems.TasksManagementSystem.controller;
 
 
+import com.ems.TasksManagementSystem.dto.EmployeeDtoRequest;
 import com.ems.TasksManagementSystem.entity.Employee;
+import com.ems.TasksManagementSystem.mapper.EmployeeMapper;
+import com.ems.TasksManagementSystem.mapper.EmployeeRequestMapper;
 import com.ems.TasksManagementSystem.services.EmployeeServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -15,8 +18,9 @@ public class EmployeeControll {
     @Autowired
     private EmployeeServices services;
 
-    @PostMapping
-    public ResponseEntity<?> addEmployee(@RequestBody Employee employee) {
+    @PostMapping("v2/addEmployee")
+    public ResponseEntity<?> addEmployee(@RequestBody EmployeeDtoRequest employee) {
+
         return ResponseEntity.ok(services.addEmployee(employee));
     }
 
