@@ -1,7 +1,9 @@
 package com.ems.TasksManagementSystem.controller;
 
 
+import com.ems.TasksManagementSystem.dto.DepartmentDto;
 import com.ems.TasksManagementSystem.entity.Department;
+import com.ems.TasksManagementSystem.mapper.DepartmentMapper;
 import com.ems.TasksManagementSystem.services.DepartmentServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,13 @@ public class DepartmentControll {
     @Autowired
     private DepartmentServices services;
 
+    @Autowired
+    private DepartmentMapper mapper;
+
     @PostMapping
-    public ResponseEntity<?> addDepartment(@RequestBody Department department) {
-        return ResponseEntity.ok(services.addDepartment(department));
+    public ResponseEntity<?> addDepartment(@RequestBody DepartmentDto dto) {
+
+        return ResponseEntity.ok(services.addDepartment(dto));
     }
 
     @PutMapping
