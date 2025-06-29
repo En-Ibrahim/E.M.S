@@ -3,6 +3,7 @@ package com.ems.TasksManagementSystem.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -48,6 +49,7 @@ public class Employee {
     private String password;
     @NotNull
     private String position;
+
 
     @ManyToOne
     private Department department;

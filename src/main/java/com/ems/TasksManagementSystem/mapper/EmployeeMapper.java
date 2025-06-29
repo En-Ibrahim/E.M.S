@@ -1,7 +1,6 @@
 package com.ems.TasksManagementSystem.mapper;
 
 import com.ems.TasksManagementSystem.dto.EmployeeDto;
-import com.ems.TasksManagementSystem.dto.EmployeeDtoRequest;
 import com.ems.TasksManagementSystem.entity.Employee;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -18,4 +17,7 @@ public interface EmployeeMapper {
     EmployeeDto mapToDTO(Employee employee);
 
     List<EmployeeDto> mapToDTO(List<Employee> employees);
+
+    @Mapping(target = "department.name",source = "department")
+    Employee mapToEntity(EmployeeDto dto);
 }

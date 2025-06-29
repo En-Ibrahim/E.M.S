@@ -42,18 +42,30 @@ public class EmployeeServices {
 
     public EmployeeDtoRequest addEmployee(EmployeeDtoRequest employeeDto) {
 
-        Employee employee=requestMapper.mapToEntity(employeeDto);
+        Employee employee = requestMapper.mapToEntity(employeeDto);
+        Department department = departmentRepo.findByName(employee.getDepartment().getName()).orElseThrow();
+        Optional<Employee> optional = employeeRepo.findByEmail(employee.getEmail());
+        employee.setDepartment(department);
+        logger.info(employee.toString());
 
-        if (employee != null && employee.getFullName() != null && employee.getEmail() != null) {
-            if (employeeRepo.findByEmail(employee.getEmail()).isEmpty() && !employeeRepo.findByEmail(employee.getEmail()).isPresent()) {
-                return requestMapper.mapToDTO(employeeRepo.save(employee));
-            } else {
-                logger.error("The Employee is duplicate");
-                throw new DuplicatedErrorException("The Employee is duplicate");
-            }
-        } else {
-            logger.error("Entry Correct data");
-            throw new BadRequestException("Entry Correct data");
+        validateEmployeeData(employee);
+
+        if (optional.isPresent()) {
+            logger.error("The Employee is duplicate");
+            throw new DuplicatedErrorException("The Employee is duplicate");
+        }
+        return requestMapper.mapToDTO(employeeRepo.save(employee));
+    }
+
+    private void validateEmployeeData(Employee employee) {
+        if (employee.getFullName() == null || employee.getFullName().isBlank()) {
+            throw new BadRequestException("Full name is required");
+        }
+        if (employee.getEmail() == null || employee.getEmail().isBlank()) {
+            throw new BadRequestException("Email is required");
+        }
+        if (employee.getDepartment() == null || employee.getDepartment().getName() == null) {
+            throw new BadRequestException("Department name is required");
         }
     }
 
