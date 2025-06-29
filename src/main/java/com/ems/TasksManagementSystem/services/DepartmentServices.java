@@ -29,13 +29,15 @@ public class DepartmentServices {
 
     private final Logger logger = LoggerFactory.getLogger(DepartmentServices.class);
 
-    public DepartmentDto addDepartment(DepartmentDto dto) {
-        Department department=  mapper.mapToEntity(dto);
+    public DepartmentDto addDepartment(Department department) {
 
+        logger.info(department.toString());
         if (department != null && department.getName() != null) {
-            if (departmentRepo.findByName(department.getName()).isEmpty() && !departmentRepo.findByName(department.getName()).isPresent())
+            if (departmentRepo.findByName(department.getName()).isEmpty() && !departmentRepo.findByName(department.getName()).isPresent()) {
+                logger.info(departmentRepo.save(department).toString());
                 return mapper.mapToDTO(departmentRepo.save(department));
-            else
+
+            } else
                 throw new DuplicatedErrorException("Duplicate Name for Department, change name ");
         } else
             throw new BadRequestException("Entry correct data");

@@ -2,6 +2,7 @@ package com.ems.TasksManagementSystem.entity;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import lombok.*;
 
 @Entity
@@ -20,6 +21,7 @@ public class Department {
     @Nonnull
     private String name;
 
+    @Null
     @OneToOne
     private Employee manager;
 

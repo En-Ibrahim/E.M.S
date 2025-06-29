@@ -1,8 +1,10 @@
 package com.ems.TasksManagementSystem.dto;
 
 
-import com.ems.TasksManagementSystem.entity.Employee;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 //@Builder
