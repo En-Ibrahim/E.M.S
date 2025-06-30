@@ -29,7 +29,8 @@ public class ProjectServices {
 
     private final Logger logger = LoggerFactory.getLogger(ProjectServices.class);
 
-    public ProjectDto addProject(Project project) {
+    public ProjectDto addProject(ProjectDto dto) {
+        Project project=mapper.mapToEntity(dto);
         if (project != null && project.getName() != null)
             return mapper.mapToDTO(projectRepo.save(project));
         else {

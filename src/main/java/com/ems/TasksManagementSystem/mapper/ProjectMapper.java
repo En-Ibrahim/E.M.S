@@ -14,6 +14,8 @@ public interface ProjectMapper {
 
     ProjectDto mapToDTO(Project project);
 
+    Project mapToEntity(ProjectDto dto);
+
     List<ProjectDto> mapToDTO(List<Project> projects);
 
 }
