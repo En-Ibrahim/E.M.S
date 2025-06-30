@@ -102,9 +102,12 @@ public class EmployeeServices {
     public List<EmployeeDto> findAllEmployeeByDepartment(String department) {
 
         Optional<Department> department1 = departmentRepo.findByName(department);
+
+        List<Employee> employees = employeeRepo.findAllByDepartment(department1.get().getName());
+
         if (!department1.isEmpty() && department1.isPresent() && department != null)
-            if (employeeRepo.findAllByDepartment(department) != null)
-                return mapper.mapToDTO(employeeRepo.findAllByDepartment(department));
+            if (employees != null)
+                return mapper.mapToDTO(employees);
             else {
                 logger.error("Not Found Employees in this department");
                 throw new RecordNotFoundException("Not Found Employees in this department");

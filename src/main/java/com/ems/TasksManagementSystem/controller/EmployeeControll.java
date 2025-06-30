@@ -17,7 +17,7 @@ public class EmployeeControll {
     @Autowired
     private EmployeeServices services;
 
-    @PostMapping("/v2/addEmployee")
+    @PostMapping
     public ResponseEntity<?> addEmployee(@RequestBody EmployeeDtoRequest employee) {
 
         return ResponseEntity.ok(services.addEmployee(employee));
