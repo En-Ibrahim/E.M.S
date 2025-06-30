@@ -27,7 +27,8 @@ public class TaskServices {
 
     private final Logger logger = LoggerFactory.getLogger(TaskServices.class);
 
-    public TaskDto addTask(Task task) {
+    public TaskDto addTask(TaskDto dto) {
+        Task task = mapper.mapToEntity(dto);
         if (task!=null && task.getName()!=null)
             return mapper.mapToDTO(taskRepo.save(task));
         else {
@@ -37,7 +38,8 @@ public class TaskServices {
     }
 
 
-    public TaskDto updateTask(Task task) {
+    public TaskDto updateTask(TaskDto dto) {
+        Task task = mapper.mapToEntity(dto);
         Optional<Task> entity = taskRepo.findById(task.getTask_id());
         if (!entity.isEmpty() && entity.isPresent())
             return mapper.mapToDTO(taskRepo.save(entity.get()));

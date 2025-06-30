@@ -1,6 +1,7 @@
 package com.ems.TasksManagementSystem.controller;
 
 
+import com.ems.TasksManagementSystem.dto.TaskDto;
 import com.ems.TasksManagementSystem.entity.Task;
 import com.ems.TasksManagementSystem.services.TaskServices;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,12 @@ public class TaskControll {
     private TaskServices services;
 
     @PostMapping
-    public ResponseEntity<?> addTask(@RequestBody Task task) {
+    public ResponseEntity<?> addTask(@RequestBody TaskDto task) {
         return ResponseEntity.ok(services.addTask(task));
     }
 
     @PutMapping
-    public ResponseEntity<?> updateTask(@RequestBody Task task) {
+    public ResponseEntity<?> updateTask(@RequestBody TaskDto task) {
         return ResponseEntity.ok(services.updateTask(task));
     }
 
