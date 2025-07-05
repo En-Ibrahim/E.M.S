@@ -12,7 +12,7 @@ import lombok.*;
 @Setter
 @ToString
 public class TaskDto {
-    private Long task_id;
+
 
     private String name;
     private String description;
