@@ -22,9 +22,9 @@ public class DepartmentControll {
     private DepartmentMapper mapper;
 
     @PostMapping
-    public ResponseEntity<?> addDepartment(@RequestBody Department dto) {
+    public ResponseEntity<?> addDepartment(@RequestBody Department department) {
 
-        return ResponseEntity.ok(services.addDepartment(dto));
+        return ResponseEntity.ok(services.addDepartment(department));
     }
 
     @PutMapping

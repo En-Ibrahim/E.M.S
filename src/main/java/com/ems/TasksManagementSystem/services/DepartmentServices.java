@@ -24,6 +24,8 @@ public class DepartmentServices {
     @Autowired
     private DepartmentRepo departmentRepo;
 
+
+
     @Autowired
     private final DepartmentMapper mapper;
 
@@ -31,16 +33,33 @@ public class DepartmentServices {
 
     public DepartmentDto addDepartment(Department department) {
 
-        logger.info(department.toString());
-        if (department != null && department.getName() != null) {
-            if (departmentRepo.findByName(department.getName()).isEmpty() && !departmentRepo.findByName(department.getName()).isPresent()) {
-                logger.info(departmentRepo.save(department).toString());
-                return mapper.mapToDTO(departmentRepo.save(department));
+        Optional<Department> optional = departmentRepo.findByName(department.getName());
 
-            } else
-                throw new DuplicatedErrorException("Duplicate Name for Department, change name ");
-        } else
-            throw new BadRequestException("Entry correct data");
+        if (optional.isEmpty()){
+            Department saved= departmentRepo.save(department);
+            logger.info(saved.toString());
+            return mapper.mapToDTO(saved);
+        }
+        else
+            throw new BadRequestException("The department is already defined");
+
+
+//        Department department= mapper.mapToEntity(dto);
+//
+//        logger.info(department.toString());
+//
+//        if (department != null && department.getName() != null) {
+//
+//            if (departmentRepo.findByName(department.getName()).isEmpty() && !departmentRepo.findByName(department.getName()).isPresent()) {
+//
+//                Department saved=departmentRepo.save(department);
+//                logger.info(saved.toString());
+//                return mapper.mapToDTO(saved);
+//
+//            } else
+//                throw new DuplicatedErrorException("Duplicate Name for Department, change name ");
+//        } else
+//            throw new BadRequestException("Entry correct data");
     }
 
     public DepartmentDto updateDepartment(Department entity) {
