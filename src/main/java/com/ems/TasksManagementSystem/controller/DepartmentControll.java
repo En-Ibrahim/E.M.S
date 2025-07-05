@@ -28,7 +28,7 @@ public class DepartmentControll {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateDepartment(Department department) {
+    public ResponseEntity<?> updateDepartment(@RequestBody DepartmentDto department) {
         return ResponseEntity.ok(services.updateDepartment(department));
     }
 

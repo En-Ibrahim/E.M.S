@@ -2,10 +2,12 @@ package com.ems.TasksManagementSystem.services;
 
 import com.ems.TasksManagementSystem.dto.DepartmentDto;
 import com.ems.TasksManagementSystem.entity.Department;
+import com.ems.TasksManagementSystem.entity.Employee;
 import com.ems.TasksManagementSystem.exception.BadRequestException;
 import com.ems.TasksManagementSystem.exception.DuplicatedErrorException;
 import com.ems.TasksManagementSystem.exception.RecordNotFoundException;
 import com.ems.TasksManagementSystem.mapper.DepartmentMapper;
+import com.ems.TasksManagementSystem.mapper.EmployeeMapper;
 import com.ems.TasksManagementSystem.repo.DepartmentRepo;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -24,7 +26,11 @@ public class DepartmentServices {
     @Autowired
     private DepartmentRepo departmentRepo;
 
+    @Autowired
+    private EmployeeServices employeeServices;
 
+    @Autowired
+    private EmployeeMapper employeeMapper;
 
     @Autowired
     private final DepartmentMapper mapper;
@@ -62,10 +68,20 @@ public class DepartmentServices {
 //            throw new BadRequestException("Entry correct data");
     }
 
-    public DepartmentDto updateDepartment(Department entity) {
-        Optional<Department> employee = departmentRepo.findById(entity.getDept_id());
-        if (!employee.isEmpty() && employee.isPresent())
-            return mapper.mapToDTO(departmentRepo.save(employee.get()));
+    public DepartmentDto updateDepartment(DepartmentDto dto) {
+
+        System.out.println(dto);
+
+        Optional<Department> optional = departmentRepo.findByName(dto.getName());
+
+        Employee employee= employeeMapper.mapToEntity(employeeServices.findById(dto.getManager()));
+
+        logger.info(employee.toString());
+
+        optional.get().setManager(employee);
+
+        if (!optional.isEmpty() && optional.isPresent())
+            return mapper.mapToDTO(departmentRepo.save(optional.get()));
         else
             throw new RecordNotFoundException("Not found Department , Please check it again");
     }
