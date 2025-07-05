@@ -29,6 +29,10 @@ public class Employee {
     private String lastName;
 
     private String fullName=firstName+" "+lastName;
+    @Email
+    private String email;
+    @NotNull
+    private String password;
 
     private String address;
 
@@ -42,11 +46,9 @@ public class Employee {
 
     private String educationLevels;
 
-    @Email
-    private String email;
+
     private String phoneNumber;
-    @NotNull
-    private String password;
+
     @NotNull
     private String position;
 

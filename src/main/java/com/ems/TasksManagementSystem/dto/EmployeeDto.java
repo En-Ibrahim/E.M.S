@@ -11,7 +11,7 @@ import lombok.*;
 
 public class EmployeeDto {
 
-
+    private Long emp_id;
     private String name;
     private String email;
     private String position;
