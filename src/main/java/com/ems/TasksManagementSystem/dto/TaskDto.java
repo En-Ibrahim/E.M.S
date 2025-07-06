@@ -13,14 +13,14 @@ import lombok.*;
 @ToString
 public class TaskDto {
 
-
+    private Long task_id;
     private String name;
     private String description;
     private State state;
 
 
-    private String project;
+    private Long project;
 
-    private String assign_to;
+    private Long assign_to;
 
 }

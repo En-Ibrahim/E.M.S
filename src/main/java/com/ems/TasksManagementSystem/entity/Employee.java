@@ -3,13 +3,10 @@ package com.ems.TasksManagementSystem.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -28,7 +25,6 @@ public class Employee {
     private String firstName;
     private String lastName;
 
-    private String fullName=firstName+" "+lastName;
     @Email
     private String email;
     @NotNull
@@ -36,11 +32,9 @@ public class Employee {
 
     private String address;
 
-    @DateTimeFormat(pattern = "yyyy/mm/dd")
-    private Date date;
     private String nationality;
 
-    private List<String> skills= new ArrayList<>();
+    private List<String> skills = new ArrayList<>();
 
     private int Experience_Years;
 
@@ -62,9 +56,9 @@ public class Employee {
 
     private Role role;
 
-    private LocalDateTime dateTime;
+    private LocalDateTime date_Hiring;
 
     public String getFullName() {
-        return getFirstName()+" "+getLastName();
+        return getFirstName() + " " + getLastName();
     }
 }

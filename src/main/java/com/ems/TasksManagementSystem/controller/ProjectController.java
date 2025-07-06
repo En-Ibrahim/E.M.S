@@ -6,6 +6,7 @@ import com.ems.TasksManagementSystem.entity.Project;
 import com.ems.TasksManagementSystem.services.ProjectServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +23,12 @@ public class ProjectController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateProject(@RequestBody Project project) {
+    public ResponseEntity<?> updateProject(@RequestBody ProjectDto project) {
         return ResponseEntity.ok(services.updateProject(project));
     }
 
     @GetMapping("/id")
-    public ResponseEntity<?> findByID(Long id) {
+    public ResponseEntity<?> findByID(@Param("id") Long id) {
         return ResponseEntity.ok(services.findById(id));
     }
 
@@ -38,7 +39,7 @@ public class ProjectController {
 
 
     @DeleteMapping
-    public ResponseEntity<?> delete(Long id) {
+    public ResponseEntity<?> delete(@Param("id") Long id) {
         services.delete(id);
         return ResponseEntity.ok(null);
     }

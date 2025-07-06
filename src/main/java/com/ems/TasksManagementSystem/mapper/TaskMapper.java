@@ -11,12 +11,12 @@ import java.util.List;
 public interface TaskMapper {
 
 
-    @Mapping(target = "project",source = "project.name")
-    @Mapping(target = "assign_to",source = "assign_to.fullName")
+    @Mapping(target = "project",source = "project.project_id")
+    @Mapping(target = "assign_to",source = "assign_to.emp_id")
     TaskDto mapToDTO(Task task);
 
-    @Mapping(target = "project.name",source = "project")
-    @Mapping(target = "assign_to.fullName",source = "assign_to")
+    @Mapping(target = "project.project_id",source = "project")
+    @Mapping(target = "assign_to.emp_id",source = "assign_to")
     Task mapToEntity(TaskDto dto);
     List<TaskDto> mapToDTO(List<Task> task);
 }

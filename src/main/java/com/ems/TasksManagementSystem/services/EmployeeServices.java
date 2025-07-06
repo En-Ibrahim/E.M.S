@@ -46,7 +46,6 @@ public class EmployeeServices {
         Department department = departmentRepo.findByName(employee.getDepartment().getName()).orElseThrow();
         Optional<Employee> optional = employeeRepo.findByEmail(employee.getEmail());
         employee.setDepartment(department);
-        logger.info(employee.toString());
 
         validateEmployeeData(employee);
 
@@ -69,11 +68,11 @@ public class EmployeeServices {
         }
     }
 
-    public EmployeeDto updateEmployee(Employee entity) {
+    public EmployeeDtoRequest updateEmployee(Employee entity) {
 
         Optional<Employee> employee = employeeRepo.findById(entity.getEmp_id());
         if (!employee.isEmpty() && employee.isPresent()) {
-            return mapper.mapToDTO(employeeRepo.save(employee.get()));
+            return requestMapper.mapToDTO(employeeRepo.save(entity));
         } else {
             logger.error("Not found Employee");
             throw new RecordNotFoundException("Not found Employee");
@@ -82,6 +81,15 @@ public class EmployeeServices {
 
     public EmployeeDto findById(Long id) {
         Optional<Employee> optional = employeeRepo.findById(id);
+        if (optional.isPresent() && !optional.isEmpty())
+            return mapper.mapToDTO(optional.get());
+        else {
+            logger.error("Not found Employee");
+            throw new RecordNotFoundException("Not found Employee");
+        }
+    }
+    public EmployeeDto findByEmail(String email) {
+        Optional<Employee> optional = employeeRepo.findByEmail(email);
         if (optional.isPresent() && !optional.isEmpty())
             return mapper.mapToDTO(optional.get());
         else {

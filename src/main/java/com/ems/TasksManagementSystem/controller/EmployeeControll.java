@@ -44,7 +44,7 @@ public class EmployeeControll {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(Long id) {
+    public ResponseEntity<?> delete(@Param("id") Long id) {
         services.delete(id);
         return ResponseEntity.ok(null);
     }

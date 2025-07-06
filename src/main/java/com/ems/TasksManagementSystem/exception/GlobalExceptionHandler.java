@@ -6,8 +6,11 @@ import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -31,8 +34,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(RecordNotFoundException.class)
-    public ResponseEntity<ErrorResponse> notFoundException(RecordNotFoundException ex) {
-        return buildErrorResponse(HttpStatus.NOT_FOUND, ex);
+    public ResponseEntity<?> notFoundException(RecordNotFoundException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("success", false);
+        error.put("message", ex.getMessage());
+        error.put("timestamp", LocalDateTime.now());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DuplicatedErrorException.class)

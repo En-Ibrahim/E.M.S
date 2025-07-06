@@ -24,6 +24,7 @@ public class Task {
 
     @ManyToOne
     private Project project;
+
     @ManyToOne
     private Employee assign_to;
 

@@ -14,5 +14,5 @@ public class DepartmentDto {
 
     private String name;
 
-    private Long manager;
+    private String manager;
 }

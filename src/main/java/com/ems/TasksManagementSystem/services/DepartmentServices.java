@@ -74,7 +74,7 @@ public class DepartmentServices {
 
         Optional<Department> optional = departmentRepo.findByName(dto.getName());
 
-        Employee employee= employeeMapper.mapToEntity(employeeServices.findById(dto.getManager()));
+        Employee employee= employeeMapper.mapToEntity(employeeServices.findByEmail(dto.getManager()));
 
         logger.info(employee.toString());
 
@@ -88,6 +88,14 @@ public class DepartmentServices {
 
     public DepartmentDto findById(Long id) {
         Optional<Department> optional = departmentRepo.findById(id);
+        if (optional.isEmpty() && optional != null)
+            return mapper.mapToDTO(optional.get());
+        else
+            throw new RecordNotFoundException("Not found Department");
+    }
+
+    public DepartmentDto findByName(String name) {
+        Optional<Department> optional = departmentRepo.findByName(name);
         if (optional.isEmpty() && optional != null)
             return mapper.mapToDTO(optional.get());
         else

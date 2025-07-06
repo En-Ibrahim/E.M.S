@@ -1,10 +1,14 @@
 package com.ems.TasksManagementSystem.services;
 
 import com.ems.TasksManagementSystem.dto.TaskDto;
+import com.ems.TasksManagementSystem.entity.Employee;
+import com.ems.TasksManagementSystem.entity.Project;
 import com.ems.TasksManagementSystem.entity.Task;
 import com.ems.TasksManagementSystem.exception.BadRequestException;
 import com.ems.TasksManagementSystem.exception.RecordNotFoundException;
 import com.ems.TasksManagementSystem.mapper.TaskMapper;
+import com.ems.TasksManagementSystem.repo.EmployeeRepo;
+import com.ems.TasksManagementSystem.repo.ProjectRepo;
 import com.ems.TasksManagementSystem.repo.TaskRepo;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -21,6 +25,11 @@ public class TaskServices {
 
     @Autowired
     private TaskRepo taskRepo;
+    @Autowired
+    private ProjectRepo projectRepo;
+
+    @Autowired
+    private EmployeeRepo employeeRepo;
 
     @Autowired
     private final TaskMapper mapper;
@@ -28,8 +37,30 @@ public class TaskServices {
     private final Logger logger = LoggerFactory.getLogger(TaskServices.class);
 
     public TaskDto addTask(TaskDto dto) {
+
         Task task = mapper.mapToEntity(dto);
-        if (task!=null && task.getName()!=null)
+
+        if (dto.getProject() != null) {
+            Optional<Project> project = projectRepo.findById(dto.getProject());
+            if (project.isPresent())
+                task.setProject(project.get());
+            else
+                throw new RecordNotFoundException("Not found project");
+        }
+        else
+            throw new RecordNotFoundException("Not found Project");
+
+        if (dto.getAssign_to() != null) {
+            Optional<Employee> employee = employeeRepo.findById(dto.getAssign_to());
+            if (employee.isPresent())
+                task.setAssign_to(employee.get());
+            else
+                throw new RecordNotFoundException("not found Employee");
+        }
+        else
+            task.setAssign_to(null);
+
+        if (task != null && task.getName() != null)
             return mapper.mapToDTO(taskRepo.save(task));
         else {
             logger.error("Entry correct data");
@@ -39,14 +70,24 @@ public class TaskServices {
 
 
     public TaskDto updateTask(TaskDto dto) {
-        Task task = mapper.mapToEntity(dto);
-        Optional<Task> entity = taskRepo.findById(task.getTask_id());
-        if (!entity.isEmpty() && entity.isPresent())
+        long start = System.currentTimeMillis();
+        Optional<Task> entity = taskRepo.findById(dto.getTask_id());
+        if (!entity.isEmpty()) {
+            Optional<Project> project = projectRepo.findById(dto.getProject());
+            Optional<Employee> employee = employeeRepo.findById(dto.getAssign_to());
+
+            entity.get().setProject(project.get());
+            entity.get().setAssign_to(employee.get());
+
+            long end = System.currentTimeMillis() - start;
+            System.out.println("the time take: " + end); // without index search time =244 ms and with index time =11 ms
             return mapper.mapToDTO(taskRepo.save(entity.get()));
-        else {
+        } else {
             logger.error("Not found Task");
             throw new RecordNotFoundException("Not found Task");
         }
+
+
     }
 
     public TaskDto findByID(Long id) {
@@ -59,7 +100,7 @@ public class TaskServices {
     }
 
     public List<TaskDto> findAll() {
-        if(taskRepo.findAll()!=null)
+        if (taskRepo.findAll() != null)
             return mapper.mapToDTO(taskRepo.findAll());
         else {
             logger.error("Not found Task");

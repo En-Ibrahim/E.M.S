@@ -56,6 +56,8 @@
 			<scope>runtime</scope>
 		</dependency>
 
+
+
 		<!-- mapstruct & lombok-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -90,6 +92,13 @@
 			<version>2.7.0</version>
 		</dependency>
 
+		<!-- MySQL Driver for runtime -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.33</version>
+			<scope>runtime</scope>
+		</dependency>
 
 
 	</dependencies>

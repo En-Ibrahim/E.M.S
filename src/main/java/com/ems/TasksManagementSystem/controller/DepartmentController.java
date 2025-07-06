@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/dept")
 @RequiredArgsConstructor
-public class DepartmentControll {
+public class DepartmentController {
     @Autowired
     private DepartmentServices services;
 
@@ -44,7 +44,7 @@ public class DepartmentControll {
 
 
     @DeleteMapping
-    public ResponseEntity<?> delete(Long id) {
+    public ResponseEntity<?> delete(@Param("id")  Long id) {
         services.delete(id);
         return ResponseEntity.ok(null);
     }

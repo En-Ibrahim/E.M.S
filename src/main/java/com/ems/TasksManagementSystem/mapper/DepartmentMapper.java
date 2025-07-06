@@ -13,9 +13,9 @@ public interface DepartmentMapper {
 
 
 //    @Mapping(target = "employee",ignore = true)
-    @Mapping(target = "manager",source = "manager.emp_id")
+    @Mapping(target = "manager",source = "manager.email")
     DepartmentDto mapToDTO(Department department);
-    @Mapping(target = "manager.emp_id",source = "manager")
+    @Mapping(target = "manager.email",source = "manager")
     Department mapToEntity(DepartmentDto dto);
 
 
