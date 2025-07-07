@@ -5,7 +5,7 @@ services:
     image: ems-app
     build: ./
     ports:
-      - "8087:8083"
+      - "8087:8080"
     depends_on:
       mysql:
         condition: service_healthy
