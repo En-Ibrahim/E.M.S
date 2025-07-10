@@ -35,9 +35,11 @@ public class AdminInitializer {
                     .position("OWNER")
                     .roles(Role.ADMIN)
                     .build();
+            System.out.println(admin);
             employeeRepo.save(admin);
             System.out.println("Default admin user created: " + ADMIN_EMAIL);
         } else {
+            System.out.println(adminOpt.get());
             System.out.println("Admin user already exists: " + ADMIN_EMAIL);
         }
     }
