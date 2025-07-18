@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.function.Function;
 
@@ -18,7 +19,7 @@ import java.util.function.Function;
 public class JwtService {
 
     private Logger logger= LoggerFactory.getLogger(JwtService.class);
-    private final String SECRET_KEY="p5MMtEEczlSZZBV8tKZ5C3%K%zvcg1RzYj6qB$1L2y$6OpNGxs^wP&OhUirm1ln&Om%NDwDyKRNxer4SK%e62wFr*ZRE0Um2r@M6*iWazJpEPvbP!trAkt5EY8QJC0P34B4JvA5!RCG1Fcn4tOUF!PaFtta@Gd0nEqE?TzXMMcGxY8MvOtbV04QEbyP&GD%?aaek^3hQ&D9BjMfZc@NdPHaL9E@0s%!LLxmy56d1z4fhS1*wC0kYz9RVlWVD@8&g";
+    private final String SECRET_KEY="TXlWZXJ5U2VjcmV0Snd0S2V5VGhhdElzU2FmZUFuZFNlY3VyZTEyMzQ1Ng==";
 
     public String generateToken(UserDetails userDetails){
         String authority = userDetails.getAuthorities().stream().findFirst().get().getAuthority();
@@ -61,7 +62,7 @@ public class JwtService {
     }
 
     private Key getSignKey() {
-        byte[] keyBytes= SECRET_KEY.getBytes(StandardCharsets.UTF_8);
+        byte[] keyBytes= Base64.getDecoder().decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

@@ -23,7 +23,7 @@ public class SecurityConfiguration {
     private AuthenticationProvider  authenticationProvider;
     @Autowired
     private JwtAuthenticationFilter jwtAuthFilter;
-    private String[] WHITELIST={"/api/v1/auth/**",//"/api/users","/api/users/**","/api/books","/api/books/**",
+    private String[] WHITELIST={"/api/v1/auth/**",
             "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html","/api-docs"
                 };
 
