@@ -8,10 +8,7 @@ import com.ems.TasksManagementSystem.services.ReportGenerationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,7 +21,7 @@ public class ReportController {
     private final ReportGenerationService reportGenerationService;
     private final ReportProjectTaskMapper reportProjectTaskMapper;
 
-    @PostMapping("/generate/project-task")
+    @GetMapping("/generate/project-task")
     public ResponseEntity<?> generateProjectTaskReport(
             @RequestParam(name = "date", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -39,7 +36,7 @@ public class ReportController {
         return ResponseEntity.ok(dto);
     }
 
-    @PostMapping("/generate/all")
+    @GetMapping("/generate/all")
     public ResponseEntity<?> generateAllReports() {
         List<ProjectTaskReport> reports=reportGenerationService.generateAllProjectTaskReports(LocalDate.now());
         // Add other reports here...
